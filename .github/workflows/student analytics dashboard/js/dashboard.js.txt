@@ -1,9 +1,15 @@
+// ===============================
+// 1. STUDENT DATA (MOCK DATA)
+// ===============================
 const students = [
     { id: "S001", course: "Database Systems", queries: 25, status: "Active" },
     { id: "S002", course: "Database Systems", queries: 10, status: "Moderate" },
     { id: "S003", course: "Database Systems", queries: 3, status: "Low" }
 ];
 
+// ===============================
+// 2. POPULATE STUDENT TABLE
+// ===============================
 const tableBody = document.querySelector("#studentTable tbody");
 
 students.forEach(student => {
@@ -17,15 +23,35 @@ students.forEach(student => {
     tableBody.appendChild(row);
 });
 
+// ===============================
+// 3. CREATE ANALYTICS GRAPH
+// ===============================
 const ctx = document.getElementById("usageChart");
 
-new Chart(ctx, {
-    type: "bar",
-    data: {
-        labels: ["High", "Moderate", "Low"],
-        datasets: [{
-            label: "Number of Students",
-            data: [1, 1, 1]
-        }]
-    }
-});
+if (ctx) {
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["High Usage", "Moderate Usage", "Low Usage"],
+            datasets: [{
+                label: "Number of Students",
+                data: [1, 1, 1],
+                backgroundColor: [
+                    "rgba(75, 192, 192, 0.7)",
+                    "rgba(255, 205, 86, 0.7)",
+                    "rgba(255, 99, 132, 0.7)"
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+
