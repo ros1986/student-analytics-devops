@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="css/style.css">
+<script src="js/dashboard.js"></script>
+
 body {
     font-family: Arial, sans-serif;
     margin: 30px;
@@ -21,3 +24,4 @@ th, td {
 th {
     background-color: #f4f6f8;
 }
+
