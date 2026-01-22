@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const path = require('path');
 const sql = require('mssql');
@@ -10,7 +9,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Route utama untuk dashboard
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // API untuk tarik data student dari Azure SQL
