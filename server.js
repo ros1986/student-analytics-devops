@@ -4,12 +4,12 @@ const sql = require('mssql');
 
 const app = express();
 
-// Serve static files (HTML, JS, CSS) dari folder public
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve static files dari root folder
+app.use(express.static(__dirname));
 
-// Route utama untuk dashboard
+// Route utama
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // API untuk tarik data student dari Azure SQL
