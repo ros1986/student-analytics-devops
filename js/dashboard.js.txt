@@ -1,69 +1,57 @@
 document.addEventListener("DOMContentLoaded", function () {
-fetch('/api/students')
-  .then(response => response.json())
-  .then(data => {
-    const container = document.getElementById('student-data');
-    container.innerHTML = JSON.stringify(data, null, 2);
-  })
-  .catch(err => console.error(err));
+  fetch('/api/students')
+    .then(response => response.json())
+    .then(data => {
+      // ===============================
+      // 1. POPULATE TABLE
+      // ===============================
+      const tableBody = document.querySelector("#studentTable tbody");
+      tableBody.innerHTML = ""; // clear dulu
 
-    // ===============================
-    // 1. STUDENT DATA
-    // ===============================
-    const students = [
-        { id: "S001", course: "Database Systems", queries: 25, status: "Active" },
-        { id: "S002", course: "Database Systems", queries: 10, status: "Moderate" },
-        { id: "S003", course: "Database Systems", queries: 3, status: "Low" }
-    ];
-
-    // ===============================
-    // 2. POPULATE TABLE
-    // ===============================
-    const tableBody = document.querySelector("#studentTable tbody");
-
-    students.forEach(student => {
+      data.forEach(student => {
         const row = document.createElement("tr");
         row.innerHTML = `
-            <td>${student.id}</td>
-            <td>${student.course}</td>
-            <td>${student.queries}</td>
-            <td>${student.status}</td>
+          <td>${student.StudentID}</td>
+          <td>${student.Course}</td>
+          <td>${student.TotalQueries}</td>
+          <td>${student.Status}</td>
         `;
         tableBody.appendChild(row);
-    });
+      });
 
-    // ===============================
-    // 3. CREATE GRAPH
-    // ===============================
-    const ctx = document.getElementById("usageChart");
+      // ===============================
+      // 2. CREATE GRAPH (ikut status)
+      // ===============================
+      const statusCounts = { High: 0, Moderate: 0, Low: 0 };
 
-    if (ctx) {
-        new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: ["High", "Moderate", "Low"],
-                datasets: [{
-                    label: "Number of Students",
-                    data: [1, 1, 1],
-                    backgroundColor: [
-                        "rgba(54, 162, 235, 0.7)",
-                        "rgba(255, 206, 86, 0.7)",
-                        "rgba(255, 99, 132, 0.7)"
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    } else {
-        console.error("Canvas usageChart not found");
-    }
+      data.forEach(s => {
+        if (s.Status === "Active") statusCounts.High++;
+        else if (s.Status === "Moderate") statusCounts.Moderate++;
+        else statusCounts.Low++;
+      });
 
+      const ctx = document.getElementById("usageChart");
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["High", "Moderate", "Low"],
+          datasets: [{
+            label: "Number of Students",
+            data: [statusCounts.High, statusCounts.Moderate, statusCounts.Low],
+            backgroundColor: [
+              "rgba(54, 162, 235, 0.7)",
+              "rgba(255, 206, 86, 0.7)",
+              "rgba(255, 99, 132, 0.7)"
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    })
+    .catch(err => console.error("Error fetching students:", err));
 });
-
