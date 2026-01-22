@@ -6,42 +6,43 @@ document.addEventListener("DOMContentLoaded", function () {
       // 1. POPULATE TABLE
       // ===============================
       const tableBody = document.querySelector("#studentTable tbody");
-      tableBody.innerHTML = ""; // clear dulu
+      tableBody.innerHTML = "";
 
       data.forEach(student => {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${student.StudentID}</td>
-          <td>${student.Course}</td>
-          <td>${student.TotalQueries}</td>
-          <td>${student.Status}</td>
+          <td>${student.Name}</td>
+          <td>${student.Program}</td>
+          <td>${student.AverageScore}</td>
+          <td>${student.AverageAttendance}</td>
+          <td>${student.RiskLevel}</td>
         `;
         tableBody.appendChild(row);
       });
 
       // ===============================
-      // 2. CREATE GRAPH (ikut status)
+      // 2. CREATE GRAPH (ikut RiskLevel)
       // ===============================
-      const statusCounts = { High: 0, Moderate: 0, Low: 0 };
+      const riskCounts = { "High Risk": 0, "Medium Risk": 0, "Low Risk": 0 };
 
       data.forEach(s => {
-        if (s.Status === "Active") statusCounts.High++;
-        else if (s.Status === "Moderate") statusCounts.Moderate++;
-        else statusCounts.Low++;
+        if (riskCounts[s.RiskLevel] !== undefined) {
+          riskCounts[s.RiskLevel]++;
+        }
       });
 
-      const ctx = document.getElementById("usageChart");
+      const ctx = document.getElementById("riskChart");
       new Chart(ctx, {
         type: "bar",
         data: {
-          labels: ["High", "Moderate", "Low"],
+          labels: Object.keys(riskCounts),
           datasets: [{
-            label: "Number of Students",
-            data: [statusCounts.High, statusCounts.Moderate, statusCounts.Low],
+            label: "Number of Students by Risk Level",
+            data: Object.values(riskCounts),
             backgroundColor: [
-              "rgba(54, 162, 235, 0.7)",
-              "rgba(255, 206, 86, 0.7)",
-              "rgba(255, 99, 132, 0.7)"
+              "rgba(255, 99, 132, 0.7)",   // High Risk
+              "rgba(255, 206, 86, 0.7)",   // Medium Risk
+              "rgba(54, 162, 235, 0.7)"    // Low Risk
             ]
           }]
         },
