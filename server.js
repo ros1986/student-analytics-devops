@@ -19,8 +19,9 @@ app.get('/api/students', async (req, res) => {
     const result = await pool.request().query('SELECT * FROM Students');
     res.json(result.recordset);
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Database query failed');
+    console.error("Database query failed:", err);
+    res.status(500).json({
+      error:"Database query failed"});
   }
 });
 
