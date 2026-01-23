@@ -1,7 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetch('/api/Students')
-    .then(response => response.json())
+
+  fetch('/api/students')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("API request failed");
+      }
+      return response.json();
+    })
     .then(data => {
+
       // ===============================
       // 1. POPULATE TABLE
       // ===============================
@@ -10,20 +17,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
       data.forEach(student => {
         const row = document.createElement("tr");
+
         row.innerHTML = `
-          <td>${Students.Name}</td>
-          <td>${Students.Program}</td>
-          <td>${Students.AverageScore}</td>
+          <td>${student.Name}</td>
+          <td>${student.Program}</td>
+          <td>${student.AverageScore}</td>
           <td>${student.AverageAttendance}</td>
           <td>${student.RiskLevel}</td>
         `;
+
         tableBody.appendChild(row);
       });
 
       // ===============================
-      // 2. CREATE GRAPH (ikut RiskLevel)
+      // 2. RISK LEVEL ANALYSIS
       // ===============================
-      const riskCounts = { "High Risk": 0, "Medium Risk": 0, "Low Risk": 0 };
+      const riskCounts = {
+        "High Risk": 0,
+        "Medium Risk": 0,
+        "Low Risk": 0
+      };
 
       data.forEach(s => {
         if (riskCounts[s.RiskLevel] !== undefined) {
@@ -31,7 +44,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
+      // ===============================
+      // 3. BAR CHART (Chart.js)
+      // ===============================
       const ctx = document.getElementById("riskChart");
+
       new Chart(ctx, {
         type: "bar",
         data: {
@@ -49,11 +66,16 @@ document.addEventListener("DOMContentLoaded", function () {
         options: {
           responsive: true,
           scales: {
-            y: { beginAtZero: true }
+            y: {
+              beginAtZero: true
+            }
           }
         }
       });
-    })
-    .catch(err => console.error("Error fetching students:", err));
-});
 
+    })
+    .catch(err => {
+      console.error("Error loading dashboard:", err);
+    });
+
+});
