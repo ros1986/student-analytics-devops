@@ -13,9 +13,7 @@ app.get('/', (req, res) => {
 });
 
 // API untuk tarik data student dari Azure SQL
-app.get('/api/students', async (req, res) => {
-  res.json([
-    app.get('/api/students', (req, res) => {
+app.get('/api/students', (req, res) => {
   res.json([
     {
       Name: "Ali",
