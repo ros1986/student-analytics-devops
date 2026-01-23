@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch('/api/students')
     .then(response => {
       if (!response.ok) {
-        throw new Error("API request failed");
+        throw new Error("API returned error " + response.status);
       }
       return response.json();
     })
@@ -79,3 +79,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
