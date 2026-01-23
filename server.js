@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 app.get('/api/students', async (req, res) => {
   try {
     const pool = await sql.connect(process.env.DB_CONNECTION);
-    const result = await pool.request().query('SELECT * FROM Students');
+    const result = await pool.request().query('SELECT * FROM dbo.Students');
     res.json(result.recordset);
   } catch (err) {
     console.error("Database query failed:", err);
