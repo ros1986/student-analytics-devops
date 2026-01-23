@@ -14,15 +14,16 @@ app.get('/', (req, res) => {
 
 // API untuk tarik data student dari Azure SQL
 app.get('/api/students', async (req, res) => {
-  try {
-    const pool = await sql.connect(process.env.DB_CONNECTION);
-    const result = await pool.request().query('SELECT * FROM dbo.Students');
-    res.json(result.recordset);
-  } catch (err) {
-    console.error("Database query failed:", err);
-    res.status(500).json({
-      error:"Database query failed"});
-  }
+  res.json([{ test: "API OK" }]);
+//  try {
+   // const pool = await sql.connect(process.env.DB_CONNECTION);
+  //  const result = await pool.request().query('SELECT * FROM dbo.Students');
+  //  res.json(result.recordset);
+ // } catch (err) {
+//    console.error("Database query failed:", err);
+//    res.status(500).json({
+ //     error:"Database query failed"});
+//  }
 });
 
 // Port untuk Azure
