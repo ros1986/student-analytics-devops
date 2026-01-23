@@ -14,7 +14,26 @@ app.get('/', (req, res) => {
 
 // API untuk tarik data student dari Azure SQL
 app.get('/api/students', async (req, res) => {
-  res.json([{ test: "API OK" }]);
+  res.json([
+    app.get('/api/students', (req, res) => {
+  res.json([
+    {
+      Name: "Ali",
+      Program: "IT",
+      AverageScore: 78,
+      AverageAttendance: 92,
+      RiskLevel: "Medium Risk"
+    },
+    {
+      Name: "Siti",
+      Program: "CS",
+      AverageScore: 85,
+      AverageAttendance: 96,
+      RiskLevel: "Low Risk"
+    }
+  ]);
+});
+
 //  try {
    // const pool = await sql.connect(process.env.DB_CONNECTION);
   //  const result = await pool.request().query('SELECT * FROM dbo.Students');
@@ -24,7 +43,7 @@ app.get('/api/students', async (req, res) => {
 //    res.status(500).json({
  //     error:"Database query failed"});
 //  }
-});
+//});
 
 // Port untuk Azure
 const port = process.env.PORT || 3000;
