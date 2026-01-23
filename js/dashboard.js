@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetch('/api/students')
+  fetch('/api/Students')
     .then(response => response.json())
     .then(data => {
       // ===============================
@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
       data.forEach(student => {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${student.Name}</td>
-          <td>${student.Program}</td>
-          <td>${student.AverageScore}</td>
+          <td>${Students.Name}</td>
+          <td>${Students.Program}</td>
+          <td>${Students.AverageScore}</td>
           <td>${student.AverageAttendance}</td>
           <td>${student.RiskLevel}</td>
         `;
@@ -56,3 +56,4 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .catch(err => console.error("Error fetching students:", err));
 });
+
