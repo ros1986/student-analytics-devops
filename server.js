@@ -1,10 +1,9 @@
 const express = require('express');
 const path = require('path');
-const sql = require('mssql');
 
 const app = express();
 
-// Serve static files dari root folder
+// Serve static files
 app.use(express.static(__dirname));
 
 // Route utama
@@ -13,14 +12,8 @@ app.get('/', (req, res) => {
 });
 
 // ===============================
-// AZURE SQL CONFIG
+// API: MANUAL STUDENT DATA
 // ===============================
-const dbConfig = {
-  connectionString: process.env.DB_CONNECTION,
-  options: {
-    encrypt: true
-  }
-};
 app.get('/api/students', (req, res) => {
   res.json([
     {
@@ -66,11 +59,8 @@ app.get('/api/students', (req, res) => {
   ]);
 });
 
-// Azure port
+// Port Azure
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
-
-
