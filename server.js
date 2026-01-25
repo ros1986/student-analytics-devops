@@ -30,7 +30,7 @@ app.get('/api/students', async (req, res) => {
     const pool = await sql.connect(dbConfig);
     const result = await pool
       .request()
-      .query('SELECT StudentID, Name, Program, AverageScore, AverageAttendance, RiskLevel FROM dbo.Students');
+      .query('SELECT StudentID, Name, Program, AverageScore, AverageAttendance, RiskLevel FROM dbo.StudentAnalyticsView');
 
     res.json(result.recordset);
 
