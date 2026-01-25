@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const row = document.createElement("tr");
 
         row.innerHTML = `
+           <td>${student.StudentID}</td>
           <td>${student.Name}</td>
           <td>${student.Program}</td>
           <td>${student.AverageScore}</td>
@@ -81,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
 
 
 
