@@ -53,6 +53,8 @@ document.addEventListener("DOMContentLoaded", function () {
         type: "bar",
         data: {
           labels: Object.keys(riskCounts),
+          barThickness: 40,          // 👈 kecilkan bar (try 20–50)
+          maxBarThickness: 50, 
           datasets: [{
             label: "Number of Students by Risk Level",
             data: Object.values(riskCounts),
@@ -79,4 +81,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
 
