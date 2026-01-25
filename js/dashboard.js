@@ -17,16 +17,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
       data.forEach(student => {
         const row = document.createElement("tr");
-
         row.innerHTML = `
-           <td>${student.StudentID}</td>
+          <td>${student.StudentID}</td>
           <td>${student.Name}</td>
           <td>${student.Program}</td>
           <td>${student.AverageScore}</td>
           <td>${student.AverageAttendance}</td>
           <td>${student.RiskLevel}</td>
         `;
-
         tableBody.appendChild(row);
       });
 
@@ -39,9 +37,9 @@ document.addEventListener("DOMContentLoaded", function () {
         "Low Risk": 0
       };
 
-      data.forEach(s => {
-        if (riskCounts[s.RiskLevel] !== undefined) {
-          riskCounts[s.RiskLevel]++;
+      data.forEach(student => {
+        if (riskCounts[student.RiskLevel] !== undefined) {
+          riskCounts[student.RiskLevel]++;
         }
       });
 
@@ -50,15 +48,23 @@ document.addEventListener("DOMContentLoaded", function () {
       // ===============================
       const ctx = document.getElementById("riskChart");
 
-      new Chart(ctx, {
+      // Elak chart duplicate jika reload
+      if (window.riskChartInstance) {
+        window.riskChartInstance.destroy();
+      }
+
+      window.riskChartInstance = new Chart(ctx, {
         type: "bar",
         data: {
           labels: Object.keys(riskCounts),
-          barThickness: 30,          // 👈 
-          maxBarThickness: 50, 
           datasets: [{
             label: "Number of Students by Risk Level",
             data: Object.values(riskCounts),
+
+            // 👇 kawal saiz bar
+            barThickness: 30,
+            maxBarThickness: 40,
+
             backgroundColor: [
               "rgba(255, 99, 132, 0.7)",   // High Risk
               "rgba(255, 206, 86, 0.7)",   // Medium Risk
@@ -68,9 +74,13 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           scales: {
             y: {
-              beginAtZero: true
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1
+              }
             }
           }
         }
@@ -82,7 +92,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
-
-
-
-
