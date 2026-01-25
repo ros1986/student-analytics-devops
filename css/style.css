@@ -22,5 +22,12 @@ th, td {
 th {
     background-color: #f4f6f8;
 }
+.chart-container {
+  width: 100%;
+  max-width: 800px;   /* kawal lebar */
+  height: 300px;      /* kecilkan tinggi */
+  margin: 0 auto;     /* center */
+}
+
 
 
