@@ -55,6 +55,14 @@ app.get('/api/students', (req, res) => {
       AverageScore: 88,
       AverageAttendance: 95,
       RiskLevel: "Low Risk"
+    },
+    {
+      StudentID: 20,
+      Name: "Arfian",
+      Program: "Ai",
+      AverageScore: 90,
+      AverageAttendance: 97,
+      RiskLevel: "Low"
     }
   ]);
 });
