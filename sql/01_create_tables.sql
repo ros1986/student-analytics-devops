@@ -12,3 +12,6 @@ CREATE TABLE Performance (
     FOREIGN KEY (StudentID) REFERENCES Students(StudentID)
 );
 
+CREATE TABLE PROGRAM(
+ProgramID varchar(3) PRIMARY KEY,
+Program_Name varchar(20));
